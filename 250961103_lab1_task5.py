@@ -134,10 +134,10 @@ print('DATA command response received: ' + received4) # pictures go here
 # Send message data.
 
 # Fill in start
-messageSubject = 'SUBJECT: Test to see if client works\r\n'
+messageSubject = 'SUBJECT: Test to see if client works with image\r\n'
 SSLClientSocket.send(messageSubject.encode())
 
-text_MIME = MIMEText("hello world!\n")
+text_MIME = MIMEText("I love computer networks!\n")
 message.attach(text_MIME)
 image_MIME = MIMEImage(image_data, 'jpeg')
 message.attach(image_MIME)
