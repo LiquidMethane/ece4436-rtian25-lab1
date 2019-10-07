@@ -8,18 +8,18 @@ from email.mime.multipart import MIMEMultipart
 
 # define picture
 
-image_data = open('happy.jpg', 'rb').read()
+image_data = open('wat.jpg', 'rb').read()
 message = MIMEMultipart()
 
 
 # message to be sent
-msg = "\r\n I love computer networks!" 
+msg = "\r\nRuiqi Tian (rtian25) 250961103" 
 endmsg = "\r\n.\r\n"
 
 # dynamic username, password and recipient input
-username = input('Username: ') 
+username = 'richy990113@hotmail.com'
 password = getpass.getpass('Password: ')
-rcpt = input('receiver email: ')
+rcpt = 'manidimi123123@hotmail.com'
 
 
 # Choose a mail server (e.g. Google mail server) and call it mailserver mailserver = #Fill in start #Fill in end
@@ -50,8 +50,8 @@ if recv1[:3] != '250':
 
 startTLS = "STARTTLS\r\n"
 clientSocket.send(startTLS.encode())
-receivedTLS = clientSocket.recv(1024).decode()
-print("STARTTLS command response received: " + receivedTLS)
+recvTLS = clientSocket.recv(1024).decode()
+print("STARTTLS command response received: " + recvTLS)
 
 # wrap socket
 
@@ -60,8 +60,8 @@ SSLClientSocket = ssl.wrap_socket(clientSocket)
 
 # encode username with base64 
 
-userEncoding = (username).encode()
-base64Encoding = base64.b64encode(userEncoding)
+userEncode = (username).encode()
+userB64encode = base64.b64encode(userEncode)
 
 # send HELO command again and print server response
 
@@ -75,13 +75,13 @@ if recv1[:3] != '250':
 
 # send AUTH LOGIN command along with username
 
-authenticationMessage = 'AUTH LOGIN\r\n'.encode()
-SSLClientSocket.send(authenticationMessage)
-receivedAuthentication = SSLClientSocket.recv(1024).decode()
-print("auth login: " + receivedAuthentication)
-SSLClientSocket.send(base64Encoding + '\r\n'.encode())
-receivedAuthentication = SSLClientSocket.recv(1024).decode()
-print('auth username: ' + receivedAuthentication)
+authMsg = 'AUTH LOGIN\r\n'.encode()
+SSLClientSocket.send(authMsg)
+recvAuthMsg = SSLClientSocket.recv(1024).decode()
+print("auth login: " + recvAuthMsg)
+SSLClientSocket.send(userB64encode + '\r\n'.encode())
+recvAuthMsg = SSLClientSocket.recv(1024).decode()
+print('auth username: ' + recvAuthMsg)
 
 # encode password with base64
 
@@ -91,8 +91,8 @@ base64Encoding = base64.b64encode(passwordEncoding)
 # send password and print server response
 
 SSLClientSocket.send(base64Encoding + '\r\n'.encode())
-receivedAuthentication = SSLClientSocket.recv(1024).decode()
-print('auth password: ' + receivedAuthentication)
+recvAuthMsg = SSLClientSocket.recv(1024).decode()
+print('auth password: ' + recvAuthMsg)
 
 
 # Send MAIL FROM command and print server response.
@@ -100,8 +100,8 @@ print('auth password: ' + receivedAuthentication)
 # Fill in start
 mailFrom = 'MAIL FROM: ' + username + ' \r\n'
 SSLClientSocket.send(mailFrom.encode())
-received2 = SSLClientSocket.recv(1024).decode()
-print('MAIL FROM command response received: ' + received2)
+recvMailFrom = SSLClientSocket.recv(1024).decode()
+print('MAIL FROM command response received: ' + recvMailFrom)
 
 # Fill in end
 
@@ -112,8 +112,8 @@ print('MAIL FROM command response received: ' + received2)
 # Fill in start
 rcptTo = 'RCPT TO: ' + rcpt + '\r\n'
 SSLClientSocket.send(rcptTo.encode())
-received3 = SSLClientSocket.recv(1024).decode()
-print('RCPT TO command response received: ' + received3)
+recvRcptTo = SSLClientSocket.recv(1024).decode()
+print('RCPT TO command response received: ' + recvRcptTo)
 
 # Fill in end
 
@@ -124,8 +124,8 @@ print('RCPT TO command response received: ' + received3)
 # Fill in start
 data = "DATA\r\n"
 SSLClientSocket.send(data.encode())
-received4 = SSLClientSocket.recv(1024).decode()
-print('DATA command response received: ' + received4) # pictures go here
+recvData = SSLClientSocket.recv(1024).decode()
+print('DATA command response received: ' + recvData) # pictures go here
 # Fill in end
 
 
@@ -144,11 +144,6 @@ message.attach(image_MIME)
 messageContent = message.as_string()
 SSLClientSocket.send(messageContent.encode())
 
-
-# messageContent = msg
-# SSLClientSocket.send(messageContent.encode())
-
-
 # Fill in end
 
 # Message ends with a single period.
@@ -165,8 +160,8 @@ SSLClientSocket.send(endmsg.encode())
 # Fill in start
 quitCommand = 'QUIT\r\n'
 SSLClientSocket.send(quitCommand.encode())
-received5 = SSLClientSocket.recv(1024).decode()
-print('QUIT command response received: ' + received5)
+recvQuit = SSLClientSocket.recv(1024).decode()
+print('QUIT command response received: ' + recvQuit)
 SSLClientSocket.close()
 clientSocket.close()
 # Fill in end
